@@ -93,8 +93,8 @@ class NTM_Tracer(TuringMachineSimulator):
             # Placeholder for logic:
             if not next_level and all_rejected:
                 # TODO: Handle "String rejected" output [cite: 258]
-                print(f'String rejected in depth {len(tree) - 1}')
                 self.print_depth_and_trans(tree)
+                print(f'String rejected in depth {len(tree) - 1}')
                 return
 
             tree.append(next_level)
@@ -114,18 +114,21 @@ class NTM_Tracer(TuringMachineSimulator):
         node = final_node
         level = len(tree) - 1  # start at last level
 
-        while True:
-            path.append(node)
-            parent_index = node[3]
-            if parent_index == -1:
-                break  # reached root
-            level -= 1
-            node = tree[level][parent_index]
+        for index, level in enumerate(tree):
+            trimmed = [item[:3] for item in level]
+            print(f"Level {index}: {trimmed}")
+        # while True:
+        #     path.append(node)
+        #     parent_index = node[3]
+        #     if parent_index == -1:
+        #         break  # reached root
+        #     level -= 1
+        #     node = tree[level][parent_index]
 
-        print(f"String accepted in {len(tree) - 1} transitions")
-        path.reverse()
-        for depth, (left, state, right, parent, trans) in enumerate(path):
-            print(f"Depth {depth}: '{left}', '{state}', '{right}'")
+        # print(f"String accepted in {len(tree) - 1} transitions")
+        # path.reverse()
+        # for depth, (left, state, right, parent, trans) in enumerate(path):
+        #     print(f"Depth {depth}: '{left}', '{state}', '{right}'")
 
     def print_depth_and_trans(self, tree):     
         # count number of transitions
